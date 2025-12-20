@@ -39,8 +39,6 @@ The dataset is **not included directly** due to size. Download it from:
 ```bash
 pip install pandas matplotlib
 
----
-##  Run script
-python understanding_data.py
+
 
 
