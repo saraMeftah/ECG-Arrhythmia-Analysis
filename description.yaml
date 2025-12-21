@@ -1,0 +1,72 @@
+
+---
+
+## Sampling Frequency (360 Hz)
+
+The ECG signals are sampled at **360 Hz**, meaning:
+
+- 360 samples per second
+- Each sample ≈ 2.78 ms
+- A heartbeat spans **many samples**, not just one point
+
+This resolution allows accurate analysis of ECG waveforms
+(P wave, QRS complex, T wave).
+
+---
+
+## Heartbeat Segmentation (Why ±100 samples?)
+
+Each heartbeat is centered on an **R-peak** provided in the annotation file.
+
+We extract:
+- 100 samples before the R-peak
+- 100 samples after the R-peak
+
+Total samples per beat:
+
+This window captures the **full heartbeat waveform**.
+
+---
+
+##  Feature Extraction
+
+For each heartbeat (MLII lead), the following features are extracted:
+
+- **Mean**: average signal level (baseline)
+- **Standard Deviation (std)**: signal variability
+- **Max**: R-peak amplitude
+- **Min**: lowest voltage (Q/S wave depth)
+
+These features form the input for machine learning models.
+
+---
+
+##  RR Intervals
+
+RR interval = time between two consecutive R-peaks.
+
+Computed as:
+
+RR intervals are important for detecting rhythm irregularities.
+
+---
+
+##  Labels
+
+- `0` → Normal heartbeat (`N`)
+- `1` → Arrhythmia (any non-`N` annotation)
+
+ ️ In the current single-patient experiment, arrhythmic beats are much fewer than normal beats, resulting in class imbalance.
+
+
+--- 
+
+## How to Run
+
+Install dependencies:
+
+```bash
+pip install pandas matplotlib
+pip install scikit-learn
+python understanding_data.py
+python build_dataset.py
